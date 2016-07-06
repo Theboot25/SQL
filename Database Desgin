@@ -1,0 +1,129 @@
+CREATE TABLE Advisors
+
+(
+   advise INTEGER NOT NULL,
+   
+   CONSTRAINT PK_advise PRIMARY KEY (advise)
+)
+
+ CREATE TABLE Enrollment
+ 
+(
+   enroll INTEGER NOT NULL,
+   
+   stu INTEGER NOT NULL,
+   
+   prof INTEGER NOT NULL,
+   
+   CONSTRAINT PK_enroll PRIMARY KEY (enroll)
+)
+
+ CREATE TABLE Classes
+ 
+ (
+	class INTEGER NOT NULL,
+    
+	CONSTRAINT PK_class PRIMARY KEY (class)
+ )
+
+ CREATE TABLE Students
+ 
+(
+   stu INTEGER NOT NULL,
+   
+   class INTEGER NOT NULL,
+
+   CONSTRAINT PK_stu PRIMARY KEY (stu),
+   
+   CONSTRAINT FK_advise FOREIGN KEY (stu)
+   
+   			 REFERENCES Advisors (advise),
+   			 
+   CONSTRAINT FK_enroll FOREIGN KEY (stu)
+   
+   			 REFERENCES Enrollment (enroll),
+   			 
+   CONSTRAINT FK_classes FOREIGN KEY (class)
+   
+   			 REFERENCES Classes (class)
+)
+
+ CREATE TABLE Professors
+
+(
+   prof    INTEGER NOT NULL,
+   
+   chair  INTEGER,
+
+   CONSTRAINT PK_prof PRIMARY KEY (prof),
+
+   CONSTRAINT FK_advises FOREIGN KEY (prof)
+
+          	REFERENCES Advisors (advise),
+        	 
+   CONSTRAINT FK_enrolls FOREIGN KEY (prof)
+   
+   		 REFERENCES Enrollment (enroll)
+)
+
+ CREATE TABLE Courses
+
+(
+   cour INTEGER NOT NULL,
+
+   class  INTEGER  NOT NULL,
+
+   CONSTRAINT PK_cour PRIMARY KEY (cour),
+
+   CONSTRAINT FK_class FOREIGN KEY (class)
+
+          	REFERENCES Classes (class)
+)
+
+ CREATE TABLE Departments
+
+(
+   dept INTEGER NOT NULL,
+
+   cour  INTEGER  NOT NULL,
+   
+   prof INTEGER NOT NULL,
+
+   stu  INTEGER  NOT NULL,
+   
+   chair INTEGER,
+
+   CONSTRAINT PK_dept PRIMARY KEY (dept),
+
+   CONSTRAINT FK_cour FOREIGN KEY (cour)
+
+          	REFERENCES Courses (cour),
+         	 
+   CONSTRAINT FK_prof FOREIGN KEY (prof)
+
+          	REFERENCES Professors (prof),
+   
+   CONSTRAINT FK_stu FOREIGN KEY (stu)
+
+          	REFERENCES Students (stu)
+ )
+ 
+ CREATE TABLE Schools
+
+(
+   sch    INTEGER NOT NULL,
+
+   depts  INTEGER  NOT NULL,
+
+   dean  INTEGER  NOT NULL,
+   
+   CONSTRAINT PK_sch PRIMARY KEY (sch),
+
+   CONSTRAINT FK_depts FOREIGN KEY (depts)
+   
+   			 REFERENCES Departments (dept),
+   			 
+   CONSTRAINT FK_dean FOREIGN KEY (dean)
+   
+   			 REFERENCES Professors (prof)
+)
