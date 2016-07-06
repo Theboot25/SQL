@@ -1,0 +1,141 @@
+CREATE TABLE Customers
+
+  ( CustNum INT PRIMARY KEY,
+
+  Company VARCHAR(20),
+
+  CustRep TINYINT,
+
+  CredLimit SMALLMONEY
+
+  );
+  
+
+
+BULK INSERT Customers
+
+FROM 'C:\customers.txt'
+
+WITH ( FIELDTERMINATOR = '|',
+
+  ROWTERMINATOR = '\n )
+
+
+
+CREATE TABLE Offices
+
+  ( Office TINYINT,
+
+  City VARCHAR(15),
+
+  Reigon VARCHAR(15),
+
+  Mgr TINYINT,
+
+  Target MONEY,
+
+  Sales MONEY
+
+  );
+
+
+
+BULK INSERT Offices
+
+FROM 'C:\offices.txt'
+
+WITH ( FIELDTERMINATOR = '|',
+
+  ROWTERMINATOR = '\n' )
+
+
+
+CREATE TABLE Orders
+
+  ( OrderNum INT,
+
+  OrderDate DATE,
+
+  Cust INT,
+
+  Rep TINYINT,
+
+  Mfr VARCHAR(3),
+
+  Product VARCHAR(6),
+
+  Qty TINYINT,
+
+  Amount SMALLMONEY
+
+  );
+
+
+
+BULK INSERT Orders
+
+FROM 'C:\orders.txt'
+
+WITH ( FIELDTERMINATOR = '|',
+
+  ROWTERMINATOR = '\n' )
+
+
+
+CREATE TABLE Products
+
+  ( MfrID VARCHAR(3),
+
+  ProductID VARCHAR(6),
+
+  Description VARCHAR(20),
+
+  Price SMALLMONEY,
+
+  QtyOnHand INT
+
+  );
+
+
+
+BULK INSERT Products
+
+FROM 'C:\products.txt'
+
+WITH ( FIELDTERMINATOR = '|',
+
+  ROWTERMINATOR = '\n' )
+
+
+
+CREATE TABLE SalesReps
+
+  ( EmpNum TINYINT,
+
+  Name VARCHAR(13),
+
+  Age TINYINT,
+
+  RepOffice TINYINT,
+
+  Title VARCHAR(10),
+
+  HireDate DATE,
+
+  Manager TINYINT,
+
+  Quota MONEY,
+
+  Sales MONEY
+
+  );
+
+
+
+BULK INSERT SalesReps
+
+FROM 'C:\salesreps.txt'
+
+WITH ( FIELDTERMINATOR = '|',
+
+  ROWTERMINATOR = '\n' )
