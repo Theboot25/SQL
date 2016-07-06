@@ -1,0 +1,55 @@
+SELECT (pat_last_name + ', ' + pat_first_name) AS Name
+
+FROM patient
+
+WHERE pat_id IN
+
+  (SELECT pat_id
+
+  FROM treatment
+
+  WHERE service_id IN
+
+  (SELECT service_id
+
+  FROM service
+
+  WHERE service_description = 'General Panel'))
+
+ORDER BY pat_last_name, pat_first_name
+
+
+
+
+
+SELECT treatment.service_id, service_charge, actual_charge
+
+FROM treatment JOIN
+
+  (SELECT service_charge, service_id
+
+  FROM service
+
+  WHERE service_cat_id = 'SUR') AS newservice
+
+  ON treatment.service_id = newservice.service_id
+
+WHERE (service_charge - actual_charge) <> 0
+
+
+
+
+
+SELECT treatment.service_id, service_description
+
+FROM treatment JOIN service
+
+  ON treatment.service_id = service.service_id
+
+WHERE ABS(service_charge - actual_charge) > (SELECT AVG(service_charge - actual_charge)
+
+  FROM treatment JOIN service
+
+  ON treatment.service_id = service.service_id
+
+  WHERE service_cat_id = 'SUR')
